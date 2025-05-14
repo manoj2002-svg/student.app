@@ -21,27 +21,26 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())  // Disable CSRF protection (for API usage)
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/students/**").authenticated()  // Protect /students endpoints
-                .anyRequest().permitAll())  // Allow other requests without authentication
-            .httpBasic(withDefaults());  // Enable Basic Authentication
+                .requestMatchers("/students/**").authenticated()  
+                .anyRequest().permitAll())  
+            .httpBasic(withDefaults());  
 
         return http.build();
     }
 
-    // In-memory user authentication setup
-    @Bean
+       @Bean
     UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("admin")  // Username: admin
-                .password(passwordEncoder().encode("admin123"))  // Password: admin123 (encrypted)
-                .roles("USER")  // Role: USER
+        UserDetails user = User.withUsername("admin")  
+                .password(passwordEncoder().encode("admin123"))  
+                .roles("USER") 
                 .build();
 
         return new InMemoryUserDetailsManager(user);
     }
 
-    // Secure password encoder for BCrypt hashing
+    
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

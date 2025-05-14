@@ -15,28 +15,28 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    // GET all students
+    
     @GetMapping
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    // GET student by ID
+   
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Long id) { // Change Integer to Long
-        Optional<Student> student = studentRepository.findById(id); // Use Long for id
+    public Student getStudentById(@PathVariable Long id) { 
+        Optional<Student> student = studentRepository.findById(id); 
         return student.orElse(null);
     }
 
-    // POST: Create new student
+    
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentRepository.save(student);
     }
 
-    // PUT: Update student
+    
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) { // Change Integer to Long
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) { 
         Student student = studentRepository.findById(id).orElseThrow();
         student.setName(studentDetails.getName());
         student.setEmail(studentDetails.getEmail());
@@ -44,9 +44,9 @@ public class StudentController {
         return studentRepository.save(student);
     }
 
-    // DELETE: Delete student
+   
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Long id) { // Change Integer to Long
+    public String deleteStudent(@PathVariable Long id) { 
         studentRepository.deleteById(id);
         return "Student deleted successfully!";
     }
